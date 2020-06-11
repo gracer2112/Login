@@ -1,6 +1,13 @@
 <?php
-    require_once 'php/func_usuario.php';
+    define ('ROOT_PATH',dirname(__FILE__));
+    require_once ROOT_PATH . "/php/func_usuario.php";
     $log_usu = new Usuario;
+
+    if (session_status() == PHP_SESSION_ACTIVE){
+        session_unset();
+        session_destroy();
+    };
+    
 ?>
 
 <html lang="pt-br">
@@ -17,6 +24,7 @@
             <input type="password" name="f_senha" placeholder="Senha">
             <input type="submit" value="Acessar">
         </form>
+
     </div>
     <?php
     if (isset($_POST['f_email'])){
@@ -26,8 +34,12 @@
         if (!empty($str_email) && !empty($str_senha)){
                 ?>
                 <div id="retorno_inc"><?php
+                  session_start();
                   echo $log_usu->Login($str_email, $str_senha);
-                  header("login_processa.php");
+                  if (isset($_SESSION['ss_id_usuario'])){
+//                      echo $_SESSION['ss_id_usuario'];
+                      header("location: ../ProgViagens/index.php");
+                  }
                 ?></div><?php
         }
         else {
