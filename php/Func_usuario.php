@@ -86,16 +86,15 @@ Class Usuario
 
             //se não tem este usuario
             if ($execsql->rowCount() == 0){
-                return 'Usuario inexistente';
+                return 'Usuario inexistente ou Usuario/Senha Invalidos!';
             } else {
                 //abre sessão de manutenção de viagens
                 foreach ($data as $row) {
-                      session_start();
-    //                echo $row['int_tb_usu_id'];
+
+                    if (session_status() !== PHP_SESSION_ACTIVE) {
+                        session_start();
+                    };
                     $_SESSION['ss_id_usuario'] = $row['int_tb_usu_id'];
-    //                var_dump($_SESSION);
-    //                echo $row['str_tb_usu_email']."<br />\n";
-    //                echo $row['str_tb_usu_nome']."<br />\n";
                 };
                 return "Usuario logado com sucesso!";
             }
