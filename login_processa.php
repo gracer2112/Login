@@ -1,6 +1,7 @@
 <?php
     echo "sessao aberta";
-    session_start();
+    
+//    session_start();
     if(!isset($_SESSION['ss_id_usuario']))
         {
             header["location: index.php"];
